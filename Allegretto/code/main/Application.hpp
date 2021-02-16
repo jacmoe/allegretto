@@ -53,11 +53,11 @@ protected:
     std::string font_name;
     int font_size;
 
-    std::unique_ptr<ALLEGRO_TIMER, utility::ALDeleter> timer;
-    std::unique_ptr<ALLEGRO_EVENT_QUEUE, utility::ALDeleter> queue;
-    std::unique_ptr<ALLEGRO_DISPLAY, utility::ALDeleter> disp;
-    std::unique_ptr<ALLEGRO_FONT, utility::ALDeleter> font;
-    std::unique_ptr<ALLEGRO_BITMAP, utility::ALDeleter> mysha;
+    std::unique_ptr<ALLEGRO_TIMER, utility::ALDeleter> m_timer;
+    std::unique_ptr<ALLEGRO_EVENT_QUEUE, utility::ALDeleter> m_queue;
+    std::unique_ptr<ALLEGRO_DISPLAY, utility::ALDeleter> m_display;
+    std::unique_ptr<ALLEGRO_FONT, utility::ALDeleter> m_font;
+    std::unique_ptr<ALLEGRO_BITMAP, utility::ALDeleter> m_mysha;
 
 private:
     std::string m_title;
