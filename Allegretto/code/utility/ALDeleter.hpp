@@ -1,24 +1,19 @@
 /*# This file is part of the
-# ██████╗ ██╗  ██╗██╗     ██╗    ██╗ ██████╗ ██╗     ███████╗
-# ██╔══██╗╚██╗██╔╝██║     ██║    ██║██╔═══██╗██║     ██╔════╝
-# ██████╔╝ ╚███╔╝ ██║     ██║ █╗ ██║██║   ██║██║     █████╗  
-# ██╔═══╝  ██╔██╗ ██║     ██║███╗██║██║   ██║██║     ██╔══╝  
-# ██║     ██╔╝ ██╗███████╗╚███╔███╔╝╚██████╔╝███████╗██║     
-# ╚═╝     ╚═╝  ╚═╝╚══════╝ ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝     
+#  █████╗ ██╗     ██╗     ███████╗ ██████╗ ██████╗ ███████╗████████╗████████╗ ██████╗ 
+# ██╔══██╗██║     ██║     ██╔════╝██╔════╝ ██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝██╔═══██╗
+# ███████║██║     ██║     █████╗  ██║  ███╗██████╔╝█████╗     ██║      ██║   ██║   ██║
+# ██╔══██║██║     ██║     ██╔══╝  ██║   ██║██╔══██╗██╔══╝     ██║      ██║   ██║   ██║
+# ██║  ██║███████╗███████╗███████╗╚██████╔╝██║  ██║███████╗   ██║      ██║   ╚██████╔╝
+# ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝      ╚═╝    ╚═════╝ 
 #   project
 #
-#   https://github.com/jacmoe/pxlwolf
+#   https://github.com/jacmoe/allegretto
 #
-#   (c) 2020 - 2021 Jacob Moena
+#   (c) 2021 Jacob Moena
 #
 #   MIT License
 #*/
 #pragma once
-/*
-* Coded by Balint Kiss for his Raycaster-engine project at https://github.com/balintkissdev/raycaster-engine
-* Copyright (c) 2012-2021 Balint Kiss - MIT licensed.
-* Modified slightly by Jacob Moena (added the TTF_Font)
-*/
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
