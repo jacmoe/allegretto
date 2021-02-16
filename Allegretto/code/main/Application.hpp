@@ -57,7 +57,8 @@ protected:
     std::unique_ptr<ALLEGRO_EVENT_QUEUE, utility::ALDeleter> m_queue;
     std::unique_ptr<ALLEGRO_DISPLAY, utility::ALDeleter> m_display;
     std::unique_ptr<ALLEGRO_FONT, utility::ALDeleter> m_font;
-    std::unique_ptr<ALLEGRO_BITMAP, utility::ALDeleter> m_mysha;
+    std::unique_ptr<ALLEGRO_BITMAP, utility::ALDeleter> m_display_buffer;
+    ALLEGRO_LOCKED_REGION* m_screenlock;
 
 private:
     std::string m_title;

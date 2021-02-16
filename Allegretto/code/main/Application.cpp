@@ -33,6 +33,7 @@ Application::Application()
     , m_should_exit(false)
     , font_name("assets/fonts/MedievalSharp-Bold.ttf")
     , font_size(12)
+    , m_screenlock(nullptr)
 {}
 
 Application::~Application()
@@ -74,7 +75,7 @@ bool Application::init(const std::string title, int width, int height, float sca
         return false;
     }
 
-    m_display.reset(al_create_display(m_width, m_height));
+    m_display.reset(al_create_display(m_width * m_scale, m_height * m_scale));
     if (!m_display.get())
     {
         SPDLOG_ERROR("couldn't initialize display");
@@ -94,10 +95,13 @@ bool Application::init(const std::string title, int width, int height, float sca
         return false;
     }
 
-    m_mysha.reset(al_load_bitmap("assets/textures/mysha.png"));
-    if (!m_mysha.get())
+    al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
+    al_set_new_bitmap_flags(ALLEGRO_VIDEO_BITMAP | ALLEGRO_NO_PRESERVE_TEXTURE);
+
+    m_display_buffer.reset(al_create_bitmap(m_width, m_height));
+    if (!m_display_buffer.get())
     {
-        SPDLOG_ERROR("couldn't load mysha");
+        SPDLOG_ERROR("couldn't create display buffer");
         return false;
     }
 
@@ -149,8 +153,13 @@ void Application::event()
 
 void Application::render()
 {
+    al_set_target_bitmap(m_display_buffer.get());
     al_clear_to_color(al_map_rgb(0, 0, 0));
-    al_draw_text(m_font.get(), al_map_rgb(255, 255, 255), 0, 0, 0, "Hello world!");
-    al_draw_bitmap(m_mysha.get(), 100, 100, 0);
+
+    OnUserRender();
+
+    al_set_target_backbuffer(m_display.get());
+    al_draw_scaled_bitmap(m_display_buffer.get(), 0, 0, m_width, m_height, 0, 0, m_width * m_scale, m_height * m_scale, 0);
+
     al_flip_display();
 }
