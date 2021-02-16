@@ -63,42 +63,42 @@ bool Application::init(const std::string title, int width, int height, float sca
     m_timer.reset(al_create_timer(1.0 / 30.0));
     if (!m_timer.get())
     {
-        printf("couldn't initialize timer\n");
-        return 1;
+        SPDLOG_ERROR("couldn't initialize timer");
+        return false;
     }
 
     m_queue.reset(al_create_event_queue());
     if (!m_queue.get())
     {
-        printf("couldn't initialize queue\n");
-        return 1;
+        SPDLOG_ERROR("couldn't initialize queue");
+        return false;
     }
 
     m_display.reset(al_create_display(m_width, m_height));
     if (!m_display.get())
     {
-        printf("couldn't initialize display\n");
-        return 1;
+        SPDLOG_ERROR("couldn't initialize display");
+        return false;
     }
 
     m_font.reset(al_create_builtin_font());
     if (!m_font.get())
     {
-        printf("couldn't initialize font\n");
-        return 1;
+        SPDLOG_ERROR("couldn't initialize font");
+        return false;
     }
 
     if (!al_init_image_addon())
     {
-        printf("couldn't initialize image addon\n");
-        return 1;
+        SPDLOG_ERROR("couldn't initialize image addon");
+        return false;
     }
 
     m_mysha.reset(al_load_bitmap("assets/textures/mysha.png"));
     if (!m_mysha.get())
     {
-        printf("couldn't load mysha\n");
-        return 1;
+        SPDLOG_ERROR("couldn't load mysha");
+        return false;
     }
 
     al_register_event_source(m_queue.get(), al_get_keyboard_event_source());
