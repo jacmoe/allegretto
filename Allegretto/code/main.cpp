@@ -39,7 +39,9 @@ void setup_working_directory()
     std::vector<std::string> strList;
     strList.push_back("/build/Allegretto/code");
     utility::eraseSubStrings(path, strList);
+#ifndef _MSC_VER
     path = path + "/Allegretto";
+#endif
     // Set a proper working directory
     std::filesystem::current_path(path);
 }
