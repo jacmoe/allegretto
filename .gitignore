@@ -1,3 +1,7 @@
+/Allegretto/packages/
+/Allegretto/Debug/
+/Allegretto/Release/
+/Allegretto/.vs/
 # Prerequisites
 *.d
 
