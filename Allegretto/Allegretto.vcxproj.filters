@@ -16,10 +16,25 @@
     <Filter Include="Source Files\utility">
       <UniqueIdentifier>{c7726e45-9f8b-45d3-8eaa-839d69d63b19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\main">
+      <UniqueIdentifier>{888b4f3a-de81-410e-b12f-fd70db2d6237}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\main\Application.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="code\main\Game.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="code\utility\dbg_console.cpp">
+      <Filter>Source Files\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="code\utility\utils.cpp">
+      <Filter>Source Files\utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -27,6 +42,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\utility\ALDeleter.hpp">
+      <Filter>Source Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="code\main\Application.hpp">
+      <Filter>Source Files\main</Filter>
+    </ClInclude>
+    <ClInclude Include="code\main\Game.hpp">
+      <Filter>Source Files\main</Filter>
+    </ClInclude>
+    <ClInclude Include="code\utility\dbg_console.hpp">
+      <Filter>Source Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="code\utility\utils.hpp">
       <Filter>Source Files\utility</Filter>
     </ClInclude>
   </ItemGroup>
