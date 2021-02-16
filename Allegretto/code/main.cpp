@@ -34,14 +34,12 @@ void setup_working_directory()
 {
     // Get executable path
     std::string path = std::filesystem::current_path().generic_string();
+
     // Remove the build directory, so that we land on appropriate directory for asset loading
     std::vector<std::string> strList;
-    strList.push_back("/build/code");
-    strList.push_back("/vsbuild/code");
-    strList.push_back("Release");
-    strList.push_back("RelWithDebInfo");
-    strList.push_back("Debug");
+    strList.push_back("/build/Allegretto/code");
     utility::eraseSubStrings(path, strList);
+    path = path + "/Allegretto";
     // Set a proper working directory
     std::filesystem::current_path(path);
 }
