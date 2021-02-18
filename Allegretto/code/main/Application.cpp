@@ -55,6 +55,8 @@ bool Application::init(const std::string title, int width, int height, float sca
         return false;
     }
 
+    SPDLOG_INFO("Allegro {} initialized.", ALLEGRO_VERSION_STR);
+
     if (!al_install_keyboard())
     {
         SPDLOG_ERROR("Couldn't initialize keyboard");
@@ -64,34 +66,34 @@ bool Application::init(const std::string title, int width, int height, float sca
     m_timer.reset(al_create_timer(1.0 / 30.0));
     if (!m_timer.get())
     {
-        SPDLOG_ERROR("couldn't initialize timer");
+        SPDLOG_ERROR("Couldn't initialize timer");
         return false;
     }
 
     m_queue.reset(al_create_event_queue());
     if (!m_queue.get())
     {
-        SPDLOG_ERROR("couldn't initialize queue");
+        SPDLOG_ERROR("Couldn't initialize queue");
         return false;
     }
 
     m_display.reset(al_create_display(m_width * m_scale, m_height * m_scale));
     if (!m_display.get())
     {
-        SPDLOG_ERROR("couldn't initialize display");
+        SPDLOG_ERROR("Couldn't initialize display");
         return false;
     }
 
     m_font.reset(al_create_builtin_font());
     if (!m_font.get())
     {
-        SPDLOG_ERROR("couldn't initialize font");
+        SPDLOG_ERROR("Couldn't initialize font");
         return false;
     }
 
     if (!al_init_image_addon())
     {
-        SPDLOG_ERROR("couldn't initialize image addon");
+        SPDLOG_ERROR("Couldn't initialize image addon");
         return false;
     }
 
@@ -101,7 +103,7 @@ bool Application::init(const std::string title, int width, int height, float sca
     m_display_buffer.reset(al_create_bitmap(m_width, m_height));
     if (!m_display_buffer.get())
     {
-        SPDLOG_ERROR("couldn't create display buffer");
+        SPDLOG_ERROR("Couldn't create display buffer");
         return false;
     }
 
