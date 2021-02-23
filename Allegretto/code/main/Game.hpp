@@ -15,7 +15,7 @@
 #*/
 #pragma once
 
-#include "Application.hpp"
+#include "main/Application.hpp"
 
 class Game : public Application
 {

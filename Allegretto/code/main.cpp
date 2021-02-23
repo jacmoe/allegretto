@@ -72,8 +72,8 @@ void setup_logging()
 
 int main(int argc, char** argv)
 {
-    setup_working_directory();
     utility::createConsoleWindow();
+    setup_working_directory();
     setup_logging();
 
     SPDLOG_INFO("PixelWolf initializing.");

@@ -13,7 +13,7 @@
 #
 #   MIT License
 #*/
-#include "Game.hpp"
+#include "main/Game.hpp"
 
 Game::Game()
 {

@@ -36,6 +36,9 @@
     <ClCompile Include="code\utility\utils.cpp">
       <Filter>Source Files\utility</Filter>
     </ClCompile>
+    <ClCompile Include="code\main\Pixelator.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="code\utility\utils.hpp">
       <Filter>Source Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="code\main\Pixelator.hpp">
+      <Filter>Source Files\main</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
