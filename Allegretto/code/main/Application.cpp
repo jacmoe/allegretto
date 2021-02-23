@@ -97,15 +97,19 @@ bool Application::init(const std::string title, int width, int height, float sca
         return false;
     }
 
-    al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
     al_set_new_bitmap_flags(ALLEGRO_VIDEO_BITMAP | ALLEGRO_NO_PRESERVE_TEXTURE);
 
+    int flags = al_get_new_bitmap_flags();
+
+    al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
     m_display_buffer.reset(al_create_bitmap(m_width, m_height));
     if (!m_display_buffer.get())
     {
         SPDLOG_ERROR("Couldn't create display buffer");
         return false;
     }
+
+    al_set_new_bitmap_flags(flags);
 
     al_register_event_source(m_queue.get(), al_get_keyboard_event_source());
     al_register_event_source(m_queue.get(), al_get_display_event_source(m_display.get()));
