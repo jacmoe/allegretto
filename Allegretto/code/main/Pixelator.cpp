@@ -20,9 +20,9 @@ Pixelator::Pixelator()
     : m_current_buffer("primary")
     , m_buffers()
 {
+    m_buffer_map.insert({ "primary", 0 });
     m_buffers.emplace_back();
     setSize(Vector2i(360, 240));
-    m_buffer_map.insert({"primary", 0});
 }
 
 bool check_key(std::unordered_map<std::string, unsigned int> m, std::string key) 

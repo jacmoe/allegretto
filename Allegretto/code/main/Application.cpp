@@ -111,6 +111,10 @@ bool Application::init(const std::string title, int width, int height, float sca
     al_register_event_source(m_queue.get(), al_get_display_event_source(m_display.get()));
     al_register_event_source(m_queue.get(), al_get_timer_event_source(m_timer.get()));
 
+    m_pixelator = std::make_shared<Pixelator>();
+
+    m_pixelator.get()->setSize(Vector2i(m_width, m_height));
+
     SPDLOG_INFO("PixelWolf initialized.");
     return true;
 }
@@ -119,6 +123,8 @@ void Application::run()
 {
     bool done = false;
     bool redraw = true;
+
+    OnUserCreate();
 
     al_start_timer(m_timer.get());
     while (1)

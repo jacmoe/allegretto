@@ -25,6 +25,7 @@
 #include <spdlog/spdlog.h>
 
 #include "utility/ALDeleter.hpp"
+#include "main/Pixelator.hpp"
 
 
 class Application
@@ -59,6 +60,7 @@ protected:
     std::unique_ptr<ALLEGRO_FONT, utility::ALDeleter> m_font;
     std::unique_ptr<ALLEGRO_BITMAP, utility::ALDeleter> m_display_buffer;
     ALLEGRO_LOCKED_REGION* m_screenlock;
+    std::shared_ptr<Pixelator> m_pixelator;
 
 private:
     std::string m_title;
