@@ -20,6 +20,8 @@ set(main
     ./main/Application.hpp
     ./main/Game.cpp
     ./main/Game.hpp
+    ./main/Pixelator.cpp
+    ./main/Pixelator.hpp
 )
 
 set(utility
