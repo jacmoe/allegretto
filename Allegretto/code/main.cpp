@@ -80,7 +80,7 @@ int main(int argc, char** argv)
 
     Game game;
 
-    if (game.init("Allegretto", 320, 200, 2, false))
+    if (game.init())
     {
         game.run();
     }

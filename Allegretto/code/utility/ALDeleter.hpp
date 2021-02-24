@@ -22,6 +22,7 @@
 namespace utility {
     struct ALDeleter
     {
+        void operator()(ALLEGRO_CONFIG* config) { al_destroy_config(config); }
         void operator()(ALLEGRO_DISPLAY* display) { al_destroy_display(display); }
         void operator()(ALLEGRO_TIMER* timer) { al_destroy_timer(timer); }
         void operator()(ALLEGRO_EVENT_QUEUE* eventqueue) { al_destroy_event_queue(eventqueue); }

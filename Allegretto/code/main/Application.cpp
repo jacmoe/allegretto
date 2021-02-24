@@ -41,13 +41,8 @@ Application::~Application()
     SPDLOG_INFO("PixelWolf shutdown.");
 }
 
-bool Application::init(const std::string title, int width, int height, float scale, const bool fullscreen)
+bool Application::init()
 {
-    m_width = width;
-    m_height = height;
-    m_scale = scale;
-    m_title = title;
-    m_fullscreen = fullscreen;
 
     if (!al_init())
     {
@@ -56,6 +51,20 @@ bool Application::init(const std::string title, int width, int height, float sca
     }
 
     SPDLOG_INFO("Allegro {} initialized.", ALLEGRO_VERSION_STR);
+
+    m_config.reset(al_load_config_file("assets/config/allegretto.conf"));
+    if (!m_config.get())
+    {
+        SPDLOG_ERROR("Couldn't load configuration");
+        return false;
+    }
+
+    m_width = std::stoi(al_get_config_value(m_config.get(), "graphics", "width"));
+    m_height = std::stoi(al_get_config_value(m_config.get(), "graphics", "height"));
+    m_scale = std::stof(al_get_config_value(m_config.get(), "graphics", "scale"));
+    m_title = al_get_config_value(m_config.get(), "graphics", "title");
+    int fscr = std::stoi(al_get_config_value(m_config.get(), "graphics", "fullscreen"));
+    m_fullscreen = (fscr > 0);
 
     if (!al_install_keyboard())
     {
@@ -127,12 +136,17 @@ void Application::run()
 {
     bool done = false;
     bool redraw = true;
+    double old_time = 0.0;
 
     OnUserCreate();
 
     al_start_timer(m_timer.get());
+
     while (1)
     {
+        double new_time = al_get_time();
+        m_average_fps = 1.0f / (new_time - old_time);
+        old_time = new_time;
         al_wait_for_event(m_queue.get(), &m_event);
 
         switch (m_event.type)
@@ -184,12 +198,12 @@ void Application::render()
     al_set_target_bitmap(m_display_buffer.get());
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
-    OnUserRender();
-
     update_display_buffer();
 
     al_set_target_backbuffer(m_display.get());
     al_draw_scaled_bitmap(m_display_buffer.get(), 0, 0, m_width, m_height, 0, 0, m_width * m_scale, m_height * m_scale, 0);
+
+    OnUserRender();
 
     al_flip_display();
 }

@@ -34,7 +34,7 @@ public:
     Application();
     virtual ~Application();
 
-    bool init(const std::string title, int width, int height, float scale = 1.0f, const bool fullscreen = false);
+    bool init();
     void run();
 
 protected:
@@ -54,6 +54,7 @@ protected:
     std::string font_name;
     int font_size;
 
+    std::unique_ptr<ALLEGRO_CONFIG, utility::ALDeleter> m_config;
     std::unique_ptr<ALLEGRO_TIMER, utility::ALDeleter> m_timer;
     std::unique_ptr<ALLEGRO_EVENT_QUEUE, utility::ALDeleter> m_queue;
     std::unique_ptr<ALLEGRO_DISPLAY, utility::ALDeleter> m_display;

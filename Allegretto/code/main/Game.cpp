@@ -14,6 +14,7 @@
 #   MIT License
 #*/
 #include "main/Game.hpp"
+#include <allegro5/allegro_color.h>
 
 Game::Game()
 {
@@ -27,9 +28,9 @@ bool Game::OnUserCreate()
 {
     Pixelator* pixelator = m_pixelator.get();
 
-    pixelator->fill(al_map_rgba(255, 0, 0, 255));
+    pixelator->fill(al_color_name("darkmagenta"));
 
-    pixelator->drawCircle(Vector2i(30, 30), 20, al_map_rgba(0, 0, 255, 255));
+    pixelator->drawCircle(Vector2i(30, 30), 20, al_color_name("goldenrod"));
 
     return true;
 }
@@ -41,7 +42,8 @@ bool Game::OnUserUpdate(double deltaTime)
 
 bool Game::OnUserRender()
 {
-    m_pixelator.get()->randomize();
+    al_draw_textf(m_font.get(), al_map_rgb(255, 255, 255), 10.0, 10.0, 0, "FPS : %d", static_cast<uint32_t>(m_average_fps));
+
     return true;
 }
 
