@@ -27,10 +27,9 @@ bool Game::OnUserCreate()
 {
     Pixelator* pixelator = m_pixelator.get();
 
-    pixelator->fill(al_map_rgba(255, 255, 0, 255));
-    //pixelator->randomize();
+    pixelator->fill(al_map_rgba(255, 0, 0, 255));
 
-    pixelator->drawCircle(Vector2i(20, 20), 20, al_map_rgba(255, 0, 0, 255));
+    pixelator->drawCircle(Vector2i(30, 30), 20, al_map_rgba(0, 0, 255, 255));
 
     return true;
 }
@@ -42,17 +41,7 @@ bool Game::OnUserUpdate(double deltaTime)
 
 bool Game::OnUserRender()
 {
-    m_screenlock = al_lock_bitmap(m_display_buffer.get(), ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
-    for (int y = 0; y < m_height; ++y)
-    {
-        for (int x = 0; x < m_width; ++x)
-        {
-            ALLEGRO_COLOR color = m_pixelator.get()->getPixel(x, y);
-            al_put_pixel(x, y, color);
-        }
-    }
-    al_unlock_bitmap(m_display_buffer.get());
-
+    m_pixelator.get()->randomize();
     return true;
 }
 

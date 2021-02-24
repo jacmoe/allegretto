@@ -69,6 +69,7 @@ private:
 
     ALLEGRO_EVENT m_event;
 
+    void update_display_buffer();
     void event();
     void render();
 };

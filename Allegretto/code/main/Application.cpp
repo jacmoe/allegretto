@@ -163,12 +163,30 @@ void Application::event()
 {
 }
 
+void Application::update_display_buffer()
+{
+    m_screenlock = al_lock_bitmap(m_display_buffer.get(), ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
+
+    for (int y = 0; y < m_height; ++y)
+    {
+        for (int x = 0; x < m_width; ++x)
+        {
+            ALLEGRO_COLOR color = m_pixelator.get()->getPixel(x, y);
+            al_put_pixel(x, y, color);
+        }
+    }
+
+    al_unlock_bitmap(m_display_buffer.get());
+}
+
 void Application::render()
 {
     al_set_target_bitmap(m_display_buffer.get());
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
     OnUserRender();
+
+    update_display_buffer();
 
     al_set_target_backbuffer(m_display.get());
     al_draw_scaled_bitmap(m_display_buffer.get(), 0, 0, m_width, m_height, 0, 0, m_width * m_scale, m_height * m_scale, 0);
