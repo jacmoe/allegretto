@@ -50,7 +50,7 @@ void setup_logging()
 {
     std::shared_ptr<spdlog::logger> m_pxllogger;
 
-    std::string logfile_name = "log/pxllog.txt";
+    std::string logfile_name = "log/allegrettolog.txt";
 
     // Remove old log file
     if (std::filesystem::exists(logfile_name))
@@ -76,7 +76,7 @@ int main(int argc, char** argv)
     setup_working_directory();
     setup_logging();
 
-    SPDLOG_INFO("PixelWolf initializing.");
+    SPDLOG_INFO("Allegretto initializing.");
 
     Game game;
 
