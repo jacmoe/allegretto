@@ -49,7 +49,7 @@ protected:
     bool m_fullscreen;
     bool m_show_map;
     bool m_show_fps;
-    float m_average_fps;
+    double m_average_fps;
 
     std::string font_name;
     int font_size;

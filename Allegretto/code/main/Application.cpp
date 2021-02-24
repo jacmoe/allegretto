@@ -38,7 +38,7 @@ Application::Application()
 
 Application::~Application()
 {
-    SPDLOG_INFO("PixelWolf shutdown.");
+    SPDLOG_INFO("Allegretto shutdown.");
 }
 
 bool Application::init()
@@ -72,7 +72,7 @@ bool Application::init()
         return false;
     }
 
-    m_timer.reset(al_create_timer(1.0 / 30.0));
+    m_timer.reset(al_create_timer(1.0 / 60));
     if (!m_timer.get())
     {
         SPDLOG_ERROR("Couldn't initialize timer");
@@ -128,7 +128,7 @@ bool Application::init()
 
     m_pixelator.get()->setSize(Vector2i(m_width, m_height));
 
-    SPDLOG_INFO("PixelWolf initialized.");
+    SPDLOG_INFO("Allegretto initialized.");
     return true;
 }
 
@@ -136,18 +136,18 @@ void Application::run()
 {
     bool done = false;
     bool redraw = true;
-    double old_time = 0.0;
+    double old_time = al_get_time();
 
     OnUserCreate();
-
+    
     al_start_timer(m_timer.get());
 
     while (1)
     {
-        double new_time = al_get_time();
-        m_average_fps = 1.0f / (new_time - old_time);
-        old_time = new_time;
         al_wait_for_event(m_queue.get(), &m_event);
+
+        m_average_fps = 1.0 / (al_get_time() - old_time);
+        old_time = al_get_time();
 
         switch (m_event.type)
         {

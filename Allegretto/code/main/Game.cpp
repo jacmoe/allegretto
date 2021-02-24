@@ -42,7 +42,7 @@ bool Game::OnUserUpdate(double deltaTime)
 
 bool Game::OnUserRender()
 {
-    al_draw_textf(m_font.get(), al_map_rgb(255, 255, 255), 10.0, 10.0, 0, "FPS : %d", static_cast<uint32_t>(m_average_fps));
+    al_draw_textf(m_font.get(), al_map_rgb(255, 255, 255), 10.0, 10.0, 0, "FPS : %.2f", m_average_fps / 100000.0);
 
     return true;
 }
