@@ -73,8 +73,8 @@ public:
 
     void fill(ALLEGRO_COLOR color) { fill(m_current_buffer, color); }
     void fill(const std::string& name, ALLEGRO_COLOR color);
-    void fillAlpha(ALLEGRO_COLOR color, double alpha) { fillAlpha(m_current_buffer, color, alpha); }
-    void fillAlpha(const std::string& name, ALLEGRO_COLOR color, double alpha);
+    void blendAlpha(ALLEGRO_COLOR color, double alpha) { blendAlpha(m_current_buffer, color, alpha); }
+    void blendAlpha(const std::string& name, ALLEGRO_COLOR color, double alpha);
     void randomize() { randomize(m_current_buffer); }
     void randomize(const std::string& name);
     void clear() { clear(m_current_buffer); }

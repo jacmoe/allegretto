@@ -334,11 +334,11 @@ void Pixelator::fill(const std::string& name, ALLEGRO_COLOR color)
     m_buffers[index].pixels.swap(newPixels);
 }
 
-void Pixelator::fillAlpha(const std::string& name, ALLEGRO_COLOR color, double alpha)
+void Pixelator::blendAlpha(const std::string& name, ALLEGRO_COLOR color, double alpha)
 {
     if (!check_key(m_buffer_map, name))
     {
-        SPDLOG_ERROR("Attempting to fill a buffer that doesn't exist!");
+        SPDLOG_ERROR("Attempting to blend a buffer that doesn't exist!");
         return;
     }
     unsigned int index = m_buffer_map.at(name);
