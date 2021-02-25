@@ -28,7 +28,7 @@ bool Game::OnUserCreate()
 {
     Pixelator* pixelator = m_pixelator.get();
 
-    pixelator->fill(al_color_name("darkmagenta"));
+    pixelator->fill(al_color_name("darkgreen"));
 
     pixelator->drawCircle(Vector2i(30, 30), 20, al_color_name("goldenrod"));
 
