@@ -28,21 +28,21 @@ Game::~Game()
 
 bool Game::OnUserCreate()
 {
-    Pixelator* pixelator = m_pixelator.get();
+    Pixelator* pix = m_pixelator.get();
 
-    pixelator->fill(al_color_name("darkgreen"));
+    pix->fill(al_color_name("slategray"));
 
-    pixelator->addBuffer("test", 100, 100);
+    pix->addBuffer("test", 100, 100);
 
-    pixelator->drawCircle("test", Vector2i(30, 30), 20, al_color_name("goldenrod"));
+    pix->drawCircle("test", Vector2i(30, 30), 20, al_color_name("goldenrod"));
 
-    pixelator->copy("test", 200, 10);
+    pix->copy("test", 200, 10);
 
     utility::ImageAtlas atlas;
 
     atlas.load("assets/sprites/guard.png", Vector2i(128, 128));
 
-    pixelator->copy(atlas.getPixels(16), atlas.getTileSize(), 80, 40, IntRect(0, 0, atlas.getTileSize().x, atlas.getTileSize().y));
+    pix->copy(atlas.getPixels(16), atlas.getTileSize(), 80, 40, IntRect(0, 0, atlas.getTileSize().x, atlas.getTileSize().y));
 
     return true;
 }
@@ -50,9 +50,9 @@ bool Game::OnUserCreate()
 bool Game::OnUserUpdate(double deltaTime)
 {
     m_delta_time = deltaTime;
-    Pixelator* pixelator = m_pixelator.get();
-    //pixelator->randomize();
-    //pixelator->blendAlpha(al_color_name("darkred"), deltaTime);
+    Pixelator* pix = m_pixelator.get();
+    //pix->randomize();
+    //pix->blendAlpha(al_color_name("darkred"), deltaTime);
     // convert deltaTime from microseconds to seconds
     //m_delta_time *= 1000000.0;
 
@@ -61,10 +61,10 @@ bool Game::OnUserUpdate(double deltaTime)
 
 bool Game::OnUserRender()
 {
-    Pixelator* pixelator = m_pixelator.get();
-    //pixelator->blendAlpha(al_color_name("darkred"), 0.04);
-    //pixelator->randomize();
-    //pixelator->fill(al_color_name("goldenrod"));
+    Pixelator* pix = m_pixelator.get();
+    //pix->blendAlpha(al_color_name("darkred"), 0.04);
+    //pix->randomize();
+    //pix->fill(al_color_name("goldenrod"));
     return true;
 }
 
