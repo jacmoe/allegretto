@@ -18,3 +18,8 @@
 
 # allegretto
 Allegro5 experiments
+
+![Allegretto][allegretto]
+
+
+[allegretto]: https://github.com/jacmoe/allegretto/raw/main/screenshots/screenshot.png "Screenshot of Allegretto"
