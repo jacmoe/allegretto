@@ -31,6 +31,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 find_package(Allegro5 REQUIRED)
 
 include_directories(
+    ${3RD_PARTY_DIR}
     ${ALLEGRO_INCLUDE_DIR}
     ${SPDLOG_INCLUDE_DIR}
     ./Allegretto/code
