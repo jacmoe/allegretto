@@ -22,12 +22,15 @@ set(main
     ./main/Game.hpp
     ./main/Pixelator.cpp
     ./main/Pixelator.hpp
+    ./main/types.hpp
 )
 
 set(utility
     ./utility/dbg_console.cpp
     ./utility/dbg_console.hpp
     ./utility/ALDeleter.hpp
+    ./utility/ImageAtlas.cpp
+    ./utility/ImageAtlas.hpp
     ./utility/utils.cpp
     ./utility/utils.hpp
 )

@@ -15,6 +15,10 @@
 #
 cmake_minimum_required(VERSION 3.7)
 
+if(WIN32)
+    message(SEND_ERROR "This CMake script is meant to be used on Linux. And you are not on Linux at the moment. Use the Visual Studio solution instead :)")
+endif(WIN32)
+
 project(allegretto)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -30,10 +34,6 @@ include_directories(
     ${ALLEGRO_INCLUDE_DIR}
     ${SPDLOG_INCLUDE_DIR}
     ./Allegretto/code
-    ./Allegretto/code/main
-    ./Allegretto/code/components
-    ./Allegretto/code/systems
-    ./Allegretto/code/utility
 )
 
 add_subdirectory(./Allegretto/code)
