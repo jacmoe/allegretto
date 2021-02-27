@@ -1,10 +1,10 @@
 /*# This file is part of the
-#  █████╗ ██╗     ██╗     ███████╗ ██████╗ ██████╗ ███████╗████████╗████████╗ ██████╗ 
+#  █████╗ ██╗     ██╗     ███████╗ ██████╗ ██████╗ ███████╗████████╗████████╗ ██████╗
 # ██╔══██╗██║     ██║     ██╔════╝██╔════╝ ██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝██╔═══██╗
 # ███████║██║     ██║     █████╗  ██║  ███╗██████╔╝█████╗     ██║      ██║   ██║   ██║
 # ██╔══██║██║     ██║     ██╔══╝  ██║   ██║██╔══██╗██╔══╝     ██║      ██║   ██║   ██║
 # ██║  ██║███████╗███████╗███████╗╚██████╔╝██║  ██║███████╗   ██║      ██║   ╚██████╔╝
-# ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝      ╚═╝    ╚═════╝ 
+# ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝      ╚═╝    ╚═════╝
 #   project
 #
 #   https://github.com/jacmoe/allegretto
@@ -20,6 +20,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <filesystem>
+#include <allegro5/allegro_color.h>
 
 Application::Application()
     : m_scale(0)
@@ -31,8 +32,9 @@ Application::Application()
     , m_running(false)
     , m_show_fps(false)
     , m_should_exit(false)
-    , font_name("assets/fonts/MedievalSharp-Bold.ttf")
-    , font_size(12)
+    , m_font_name("assets/fonts/MedievalSharp-Bold.ttf")
+    , m_font_size(24)
+    , m_font_size_title(32)
     , m_screenlock(nullptr)
 {}
 
@@ -52,7 +54,7 @@ bool Application::init()
 
     SPDLOG_INFO("Allegro {} initialized.", ALLEGRO_VERSION_STR);
 
-    m_config.reset(al_load_config_file("assets/config/allegretto.conf"));
+    m_config.reset(al_load_config_file("assets/config/allegretto.ini"));
     if (!m_config.get())
     {
         SPDLOG_ERROR("Couldn't load configuration");
@@ -72,7 +74,13 @@ bool Application::init()
         return false;
     }
 
-    m_timer.reset(al_create_timer(1.0 / 60));
+    if (!al_install_mouse())
+    {
+        SPDLOG_ERROR("Couldn't initialize mouse");
+        return false;
+    }
+
+    m_timer.reset(al_create_timer(1.0 / 60.0));
     if (!m_timer.get())
     {
         SPDLOG_ERROR("Couldn't initialize timer");
@@ -86,6 +94,14 @@ bool Application::init()
         return false;
     }
 
+    if (m_fullscreen)
+    {
+        al_set_new_display_flags(ALLEGRO_OPENGL_3_0 | ALLEGRO_FULLSCREEN);
+    }
+    else
+    {
+        al_set_new_display_flags(ALLEGRO_OPENGL_3_0);
+    }
     m_display.reset(al_create_display(m_width * m_scale, m_height * m_scale));
     if (!m_display.get())
     {
@@ -93,7 +109,26 @@ bool Application::init()
         return false;
     }
 
-    m_font.reset(al_create_builtin_font());
+    if (!al_init_font_addon())
+    {
+        SPDLOG_ERROR("Couldn't initialize font addon");
+        return false;
+    }
+
+    if (!al_init_ttf_addon())
+    {
+        SPDLOG_ERROR("Couldn't initialize ttf addon");
+        return false;
+    }
+
+    m_title_font.reset(al_load_ttf_font(m_font_name.c_str(), m_font_size_title, 0));
+    if (!m_title_font.get())
+    {
+        SPDLOG_ERROR("Couldn't initialize font");
+        return false;
+    }
+
+    m_font.reset(al_load_ttf_font(m_font_name.c_str(), m_font_size, 0));
     if (!m_font.get())
     {
         SPDLOG_ERROR("Couldn't initialize font");
@@ -108,17 +143,12 @@ bool Application::init()
 
     al_set_new_bitmap_flags(ALLEGRO_VIDEO_BITMAP | ALLEGRO_NO_PRESERVE_TEXTURE);
 
-    int flags = al_get_new_bitmap_flags();
-
-    al_set_new_bitmap_flags(ALLEGRO_MEMORY_BITMAP);
     m_display_buffer.reset(al_create_bitmap(m_width, m_height));
     if (!m_display_buffer.get())
     {
         SPDLOG_ERROR("Couldn't create display buffer");
         return false;
     }
-
-    al_set_new_bitmap_flags(flags);
 
     al_register_event_source(m_queue.get(), al_get_keyboard_event_source());
     al_register_event_source(m_queue.get(), al_get_display_event_source(m_display.get()));
@@ -137,6 +167,13 @@ void Application::run()
     bool done = false;
     bool redraw = true;
     double old_time = al_get_time();
+    double time_now = 0.0;
+    double delta_time = 0.0;
+
+    uint64_t counted_frames = 0;
+
+    al_hide_mouse_cursor(m_display.get());
+    al_grab_mouse(m_display.get());
 
     OnUserCreate();
     
@@ -146,17 +183,31 @@ void Application::run()
     {
         al_wait_for_event(m_queue.get(), &m_event);
 
-        m_average_fps = 1.0 / (al_get_time() - old_time);
-        old_time = al_get_time();
+        m_average_fps = counted_frames / al_get_time();
+        if (m_average_fps > 2000000)
+        {
+            m_average_fps = 0;
+        }
 
         switch (m_event.type)
         {
         case ALLEGRO_EVENT_TIMER:
-            // game logic goes here.
+            time_now = al_get_time();
+            delta_time = time_now - old_time;
+            OnUserUpdate(delta_time);
+            old_time = time_now;
             redraw = true;
             break;
 
         case ALLEGRO_EVENT_KEY_DOWN:
+        case ALLEGRO_EVENT_KEY_CHAR:
+        case ALLEGRO_EVENT_KEY_UP:
+
+            al_get_keyboard_state(&m_keyboard_state);
+
+            done = !process_input();
+
+            break;
         case ALLEGRO_EVENT_DISPLAY_CLOSE:
             done = true;
             break;
@@ -170,11 +221,29 @@ void Application::run()
             render();
             redraw = false;
         }
+        ++counted_frames;
     }
+    al_show_mouse_cursor(m_display.get());
+    al_ungrab_mouse();
 }
 
-void Application::event()
+void Application::save_screenshot()
 {
+    al_save_bitmap("screenshot.png", al_get_backbuffer(m_display.get()));
+}
+
+bool Application::process_input()
+{
+    if (al_key_down(&m_keyboard_state, ALLEGRO_KEY_ESCAPE))
+    {
+        return false;
+    }
+    if (al_key_down(&m_keyboard_state, ALLEGRO_KEY_P))
+    {
+        save_screenshot();
+    }
+
+    return OnUserInput();
 }
 
 void Application::update_display_buffer()
@@ -198,12 +267,16 @@ void Application::render()
     al_set_target_bitmap(m_display_buffer.get());
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
+    OnUserRender();
+
     update_display_buffer();
 
     al_set_target_backbuffer(m_display.get());
     al_draw_scaled_bitmap(m_display_buffer.get(), 0, 0, m_width, m_height, 0, 0, m_width * m_scale, m_height * m_scale, 0);
 
-    OnUserRender();
+    al_draw_text(m_title_font.get(), al_color_name("black"), 10.0, 10.0, 0, "Allegretto");
+
+    OnUserPostRender();
 
     al_flip_display();
 }

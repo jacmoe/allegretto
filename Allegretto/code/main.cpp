@@ -25,6 +25,9 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 #include "utility/utils.hpp"
 #include "utility/dbg_console.hpp"
 #include "main/Game.hpp"

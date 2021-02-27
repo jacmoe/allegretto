@@ -1,10 +1,10 @@
 /*# This file is part of the
-#  █████╗ ██╗     ██╗     ███████╗ ██████╗ ██████╗ ███████╗████████╗████████╗ ██████╗ 
+#  █████╗ ██╗     ██╗     ███████╗ ██████╗ ██████╗ ███████╗████████╗████████╗ ██████╗
 # ██╔══██╗██║     ██║     ██╔════╝██╔════╝ ██╔══██╗██╔════╝╚══██╔══╝╚══██╔══╝██╔═══██╗
 # ███████║██║     ██║     █████╗  ██║  ███╗██████╔╝█████╗     ██║      ██║   ██║   ██║
 # ██╔══██║██║     ██║     ██╔══╝  ██║   ██║██╔══██╗██╔══╝     ██║      ██║   ██║   ██║
 # ██║  ██║███████╗███████╗███████╗╚██████╔╝██║  ██║███████╗   ██║      ██║   ╚██████╔╝
-# ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝      ╚═╝    ╚═════╝ 
+# ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝   ╚═╝      ╚═╝    ╚═════╝
 #   project
 #
 #   https://github.com/jacmoe/allegretto
@@ -21,6 +21,7 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_ttf.h>
 
 #include <spdlog/spdlog.h>
 
@@ -39,9 +40,11 @@ public:
 
 protected:
     virtual bool OnUserCreate() { return true; }
-    virtual bool OnUserUpdate(double fDeltaTime) { return true; }
+    virtual bool OnUserUpdate(double deltaTime) { return true; }
     virtual bool OnUserRender() { return true; }
+    virtual bool OnUserPostRender() { return true; }
     virtual bool OnUserDestroy() { return  true; }
+    virtual bool OnUserInput() { return true;  }
 
     float m_scale;
     int m_width;
@@ -51,16 +54,20 @@ protected:
     bool m_show_fps;
     double m_average_fps;
 
-    std::string font_name;
-    int font_size;
+    std::string m_font_name;
+    int m_font_size;
+    int m_font_size_title;
 
     std::unique_ptr<ALLEGRO_CONFIG, utility::ALDeleter> m_config;
     std::unique_ptr<ALLEGRO_TIMER, utility::ALDeleter> m_timer;
     std::unique_ptr<ALLEGRO_EVENT_QUEUE, utility::ALDeleter> m_queue;
     std::unique_ptr<ALLEGRO_DISPLAY, utility::ALDeleter> m_display;
     std::unique_ptr<ALLEGRO_FONT, utility::ALDeleter> m_font;
+    std::unique_ptr<ALLEGRO_FONT, utility::ALDeleter> m_title_font;
     std::unique_ptr<ALLEGRO_BITMAP, utility::ALDeleter> m_display_buffer;
     ALLEGRO_LOCKED_REGION* m_screenlock;
+    ALLEGRO_KEYBOARD_STATE m_keyboard_state;
+    ALLEGRO_MOUSE_STATE m_mouse_state;
     std::shared_ptr<Pixelator> m_pixelator;
 
 private:
@@ -71,6 +78,7 @@ private:
     ALLEGRO_EVENT m_event;
 
     void update_display_buffer();
-    void event();
+    void save_screenshot();
+    bool process_input();
     void render();
 };

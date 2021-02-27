@@ -170,6 +170,7 @@
     <ClCompile Include="code\main\Game.cpp" />
     <ClCompile Include="code\main\Pixelator.cpp" />
     <ClCompile Include="code\utility\dbg_console.cpp" />
+    <ClCompile Include="code\utility\ImageAtlas.cpp" />
     <ClCompile Include="code\utility\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +182,7 @@
     <ClInclude Include="code\main\Pixelator.hpp" />
     <ClInclude Include="code\utility\ALDeleter.hpp" />
     <ClInclude Include="code\utility\dbg_console.hpp" />
+    <ClInclude Include="code\utility\ImageAtlas.hpp" />
     <ClInclude Include="code\utility\utils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
